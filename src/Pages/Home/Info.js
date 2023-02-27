@@ -37,7 +37,7 @@ const Info = () => {
    <div className="flex flex-col  justify-center lg:flex-row  py-5">
      <div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
     {
-        infos.map(info=><InfoCard info={info}></InfoCard>)
+        infos.map((info,index)=><InfoCard info={info} key={index}></InfoCard>)
     }
 
     </div>

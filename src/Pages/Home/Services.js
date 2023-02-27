@@ -33,8 +33,8 @@ const Services = () => {
         service we are provided
       </h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {services.map((service) => (
-          <Service service={service}></Service>
+        {services.map((service,index) => (
+          <Service key={index} service={service}></Service>
         ))}
       </div>
       <div className="">
