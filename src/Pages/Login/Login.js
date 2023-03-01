@@ -3,6 +3,7 @@ import auth from "../../firebase.init";
 import {
   useSignInWithGoogle,
   useSignInWithEmailAndPassword,
+  useSendPasswordResetEmail,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
@@ -16,7 +17,9 @@ const Login = () => {
   const [signInWithGoogle, user, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, user2, loading, error] =
     useSignInWithEmailAndPassword(auth);
-
+    const [sendPasswordResetEmail, sending, error2] = useSendPasswordResetEmail(
+      auth
+    );
   let signInError;
   if (gError || error) {
     signInError = (
@@ -37,6 +40,8 @@ const Login = () => {
       if(user || user2){
         navigate(from,{replace: true})
       }
+  
+   
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="card bg-base-100 shadow-xl">
@@ -118,8 +123,13 @@ const Login = () => {
 
           <div className="form-control w-full max-w-xs ">
             <div className="flex gap-x-2">
-              <p>New to doctors portal? </p>{" "}
+              <p>New to doctors portal? </p>
               <Link to="/signUp"  className="text-primary">Create new account</Link>
+            </div>
+          </div>
+          <div className="form-control w-full max-w-xs ">
+            <div className="flex gap-x-2 text-primary">   
+            <Link to="/resetPassword"  className="text-primary">Forget Password?</Link>
             </div>
           </div>
           <div className="divider">OR</div>

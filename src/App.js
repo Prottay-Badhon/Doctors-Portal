@@ -9,6 +9,7 @@ import Appointment from "./Pages/Appointment/Appointment";
 import Footer from "./Pages/Shared/Footer";
 import SignUp from "./Pages/Login/SignUp";
 import RequireAuth from "./Pages/Login/RequireAuth";
+import ResetPassword from "./Pages/Login/ResetPassword";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           }
         ></Route>
         <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/resetPassword" element={<ResetPassword></ResetPassword>}></Route>
         <Route path="/signUp" element={<SignUp></SignUp>}></Route>
       </Routes>
       <Footer></Footer>
