@@ -18,6 +18,9 @@ const LogoutHandler=async()=>{
         <li><Link to="/appointment">Appointment</Link></li>
         <li><Link to="/">Reviews</Link></li>
         <li><Link to="/">Contact Us</Link></li>
+        {
+          user && <li><Link to="/dashboard">Dashboard</Link></li> 
+        }
         <li>
           {
             user? <Link onClick={LogoutHandler}>Logout</Link> : <Link to="/login">Login</Link>
@@ -42,12 +45,17 @@ const LogoutHandler=async()=>{
       </div>
       <a className="btn btn-ghost normal-case text-xl">Doctors Portal</a>
     </div>
-    <div className="navbar-end hidden lg:flex">
+    <div className="navbar-center hidden lg:flex">
       <ul className="menu menu-horizontal px-1">
         {
             menuItem
         }      
       </ul>
+    </div>
+    <div className="navbar-end">
+    <label htmlFor="my-drawer-2" tabindex="1" className="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+        </label>
     </div>
    
   </div>

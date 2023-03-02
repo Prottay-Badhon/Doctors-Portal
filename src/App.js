@@ -10,6 +10,10 @@ import Footer from "./Pages/Shared/Footer";
 import SignUp from "./Pages/Login/SignUp";
 import RequireAuth from "./Pages/Login/RequireAuth";
 import ResetPassword from "./Pages/Login/ResetPassword";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import MyAppointments from "./Pages/Dashboard/MyAppointments";
+import MyReview from "./Pages/Dashboard/MyReview";
+import MyHistory from "./Pages/Dashboard/MyHistory";
 
 function App() {
   return (
@@ -26,8 +30,31 @@ function App() {
             </RequireAuth>
           }
         ></Route>
+
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard></Dashboard>
+            </RequireAuth>
+          }
+        >
+          <Route index element={<MyAppointments></MyAppointments>}></Route>
+          <Route
+            element={<MyReview></MyReview>}
+            path="/dashboard/review"
+          ></Route>
+          <Route
+            element={<MyHistory></MyHistory>}
+            path="/dashboard/myHistory"
+          ></Route>
+        </Route>
+
         <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/resetPassword" element={<ResetPassword></ResetPassword>}></Route>
+        <Route
+          path="/resetPassword"
+          element={<ResetPassword></ResetPassword>}
+        ></Route>
         <Route path="/signUp" element={<SignUp></SignUp>}></Route>
       </Routes>
       <Footer></Footer>

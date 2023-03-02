@@ -1,20 +1,46 @@
+import axios from "axios";
 import { format } from "date-fns";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const BookingModal = ({ date, treatment,setTreatment }) => {
-  const { name, slots } = treatment;
+const BookingModal = ({ date, treatment,setTreatment,refetch }) => {
+  const { _id,name, slots } = treatment;
 const [user, loading1, error1] = useAuthState(auth);
 
   const handleBooking =(event)=>{
         event.preventDefault();
         const slot= event.target.slot.value;
-        console.log(slot)
-        setTreatment(null)
+        const formattedDate = format(date, "PP")
+        const booking = {
+          treatmentId: _id,
+          treatment: name,
+          date: formattedDate,
+          slot: slot,
+          patientName: user.displayName,
+          patient: user.email,
+          phone: event.target.phone.value
+        }
+        const url = "http://localhost:5000/booking"
+        axios.post(url,booking)
+        .then(response =>{
+          if(response.data.success){
+            toast.success(`Appointment is set on ${formattedDate}! at ${slot}`);
+          }
+          else{
+            toast.error(`Already an appointment on ${response.data.booking.data}! at ${response.data.booking.slot}`, {
+              theme: "colored",
+              });
+          }
+          refetch()
+        })
+        .catch(error=>console.log(error));
   }
   return (
     <div className="">
+      <ToastContainer />
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
@@ -54,8 +80,9 @@ const [user, loading1, error1] = useAuthState(auth);
               className="input w-full mt-5 max-w-xs input-bordered "
             />
             <input
-              type="text"
+              type="number"
               placeholder="Phone Number"
+              name="phone"
               className="input w-full max-w-xs input-bordered"
             />
            
