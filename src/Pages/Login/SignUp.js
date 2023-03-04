@@ -9,19 +9,25 @@ import {
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
 import { Link, useNavigate } from "react-router-dom";
+import useToken from '../../Hooks/useToken';
 const SignUp = () => {
     const {
         register,
         formState: { errors },
         handleSubmit,
       } = useForm();
-      const [signInWithGoogle, user, gLoading, gError] = useSignInWithGoogle(auth);
+      const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
       const [
         createUserWithEmailAndPassword,
         user2,
         loading,
         error,
       ] = useCreateUserWithEmailAndPassword(auth);
+     console.log("from signup page",user2)
+     console.log("from signup page google",gUser)
+
+      const [token,setToken]=useToken(gUser || user2 )
+      
       const [updateProfile, updating, updateError] = useUpdateProfile(auth);
       let signInError;
       if (gError || error) {
@@ -39,7 +45,7 @@ const SignUp = () => {
        await updateProfile({displayName: name})
       };
       const navigate = useNavigate()
-      if(user2){
+      if(token){
        navigate("/appointment")
       }
   return (
@@ -135,6 +141,7 @@ const SignUp = () => {
           <div className="form-control mt-5 w-full max-w-xs">
             {signInError}
           </div>
+          
           <div className="form-control mt-5 w-full max-w-xs">
             <input
               type="submit"
@@ -143,7 +150,14 @@ const SignUp = () => {
             />
           </div>
         </form>
-
+        <div className="form-control w-full max-w-xs ">
+            <button
+              className="uppercase btn btn-outline"
+              onClick={() => signInWithGoogle()}
+            >
+              Continue with google
+            </button>
+          </div>
         <div className="form-control w-full max-w-xs ">
           <div className="flex gap-x-2">
             <p>Already have an account? </p>

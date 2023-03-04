@@ -8,6 +8,7 @@ const [signOut, loading2, error2] = useSignOut(auth);
 const navigate = useNavigate();
 const LogoutHandler=async()=>{
   const success = await signOut(auth);
+  localStorage.removeItem("accessToken")
   if(success){
       navigate("/")
   }

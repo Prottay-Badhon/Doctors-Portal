@@ -8,6 +8,7 @@ import {
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
 import { Link, useLocation, useNavigate} from "react-router-dom";
+import useToken from "../../Hooks/useToken";
 const Login = () => {
   const {
     register,
@@ -20,6 +21,7 @@ const Login = () => {
     const [sendPasswordResetEmail, sending, error2] = useSendPasswordResetEmail(
       auth
     );
+ const[token]=useToken(user || user2)
   let signInError;
   if (gError || error) {
     signInError = (
@@ -37,7 +39,7 @@ const Login = () => {
     signInWithEmailAndPassword(email, password);
   };
   const navigate = useNavigate()
-      if(user || user2){
+      if(token){
         navigate(from,{replace: true})
       }
   
